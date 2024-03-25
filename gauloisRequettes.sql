@@ -51,9 +51,12 @@ WHERE composer.id_potion = 3
 SELECT nom_personnage
 FROM personnage
 INNER JOIN prendre_casque ON personnage.id_personnage = prendre_casque.id_personnage
-WHERE id_bataille = 1
-GROUP BY prendre_casque.id_personnage
-HAVING MAX(qte) LIMIT 1
+WHERE id_bataille = ALL(
+    SELECT id_personnage
+    FROM prendre_casque
+    HAVING MAX(qte)
+)
+GROUP BY nom_personnage
 
 -- 9. Nom des personnages et leur quantité de potion bue (en les classant du plus grand buveur
 -- au plus petit).

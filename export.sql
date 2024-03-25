@@ -15,11 +15,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour gaulois
-CREATE DATABASE IF NOT EXISTS `gaulois` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `gaulois`;
+-- Listage de la structure de la base pour gaulois_maximef
+CREATE DATABASE IF NOT EXISTS `gaulois_maximef` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `gaulois_maximef`;
 
--- Listage de la structure de table gaulois. autoriser_boire
+-- Listage de la structure de table gaulois_maximef. autoriser_boire
 CREATE TABLE IF NOT EXISTS `autoriser_boire` (
   `id_potion` int NOT NULL,
   `id_personnage` int NOT NULL,
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `autoriser_boire` (
   CONSTRAINT `FK_AUTO_POTION` FOREIGN KEY (`id_potion`) REFERENCES `potion` (`id_potion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.autoriser_boire : ~40 rows (environ)
-INSERT IGNORE INTO `autoriser_boire` (`id_potion`, `id_personnage`) VALUES
+-- Listage des données de la table gaulois_maximef.autoriser_boire : ~40 rows (environ)
+REPLACE INTO `autoriser_boire` (`id_potion`, `id_personnage`) VALUES
 	(1, 4),
 	(9, 5),
 	(1, 6),
@@ -72,7 +72,7 @@ INSERT IGNORE INTO `autoriser_boire` (`id_potion`, `id_personnage`) VALUES
 	(14, 42),
 	(1, 44);
 
--- Listage de la structure de table gaulois. bataille
+-- Listage de la structure de table gaulois_maximef. bataille
 CREATE TABLE IF NOT EXISTS `bataille` (
   `id_bataille` int NOT NULL AUTO_INCREMENT,
   `nom_bataille` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `bataille` (
   CONSTRAINT `FK_BATAILLE_LIEU` FOREIGN KEY (`id_lieu`) REFERENCES `lieu` (`id_lieu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.bataille : ~15 rows (environ)
-INSERT IGNORE INTO `bataille` (`id_bataille`, `nom_bataille`, `date_bataille`, `id_lieu`) VALUES
+-- Listage des données de la table gaulois_maximef.bataille : ~15 rows (environ)
+REPLACE INTO `bataille` (`id_bataille`, `nom_bataille`, `date_bataille`, `id_lieu`) VALUES
 	(1, 'Bataille du village gaulois', '0050-11-30', 1),
 	(2, 'Anniversaire d\'Obélix', '0050-07-08', 2),
 	(3, 'Raid gaulois sur Petibonum', '0050-04-25', 5),
@@ -101,7 +101,7 @@ INSERT IGNORE INTO `bataille` (`id_bataille`, `nom_bataille`, `date_bataille`, `
 	(14, 'Percée de Divodurum', '0050-01-30', 11),
 	(15, 'Embuscade de la rue Tabaga', '0050-04-02', 9);
 
--- Listage de la structure de table gaulois. boire
+-- Listage de la structure de table gaulois_maximef. boire
 CREATE TABLE IF NOT EXISTS `boire` (
   `id_potion` int NOT NULL,
   `id_personnage` int NOT NULL,
@@ -113,8 +113,8 @@ CREATE TABLE IF NOT EXISTS `boire` (
   CONSTRAINT `FK_BOIRE_POTION` FOREIGN KEY (`id_potion`) REFERENCES `potion` (`id_potion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.boire : ~28 rows (environ)
-INSERT IGNORE INTO `boire` (`id_potion`, `id_personnage`, `date_boire`, `dose_boire`) VALUES
+-- Listage des données de la table gaulois_maximef.boire : ~28 rows (environ)
+REPLACE INTO `boire` (`id_potion`, `id_personnage`, `date_boire`, `dose_boire`) VALUES
 	(1, 4, '0050-06-05', 2),
 	(1, 6, '0050-05-01', 2),
 	(1, 8, '0050-02-24', 9),
@@ -144,7 +144,7 @@ INSERT IGNORE INTO `boire` (`id_potion`, `id_personnage`, `date_boire`, `dose_bo
 	(13, 14, '0050-10-04', 3),
 	(14, 42, '0050-09-30', 3);
 
--- Listage de la structure de table gaulois. casque
+-- Listage de la structure de table gaulois_maximef. casque
 CREATE TABLE IF NOT EXISTS `casque` (
   `id_casque` int NOT NULL AUTO_INCREMENT,
   `nom_casque` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
@@ -155,8 +155,8 @@ CREATE TABLE IF NOT EXISTS `casque` (
   CONSTRAINT `FK_CASQUE_TYPECASQUE` FOREIGN KEY (`id_type_casque`) REFERENCES `type_casque` (`id_type_casque`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.casque : ~15 rows (environ)
-INSERT IGNORE INTO `casque` (`id_casque`, `nom_casque`, `cout_casque`, `id_type_casque`) VALUES
+-- Listage des données de la table gaulois_maximef.casque : ~15 rows (environ)
+REPLACE INTO `casque` (`id_casque`, `nom_casque`, `cout_casque`, `id_type_casque`) VALUES
 	(1, 'Villanovien', 865, 1),
 	(2, 'Negau', 498, 1),
 	(3, 'Corinthien', 765, 2),
@@ -173,7 +173,7 @@ INSERT IGNORE INTO `casque` (`id_casque`, `nom_casque`, `cout_casque`, `id_type_
 	(18, 'Haguenau', 140, 1),
 	(19, 'Picte', 160, 3);
 
--- Listage de la structure de table gaulois. composer
+-- Listage de la structure de table gaulois_maximef. composer
 CREATE TABLE IF NOT EXISTS `composer` (
   `id_potion` int NOT NULL,
   `id_ingredient` int NOT NULL,
@@ -184,8 +184,8 @@ CREATE TABLE IF NOT EXISTS `composer` (
   CONSTRAINT `FK_COMPOSER_POTION` FOREIGN KEY (`id_potion`) REFERENCES `potion` (`id_potion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.composer : ~24 rows (environ)
-INSERT IGNORE INTO `composer` (`id_potion`, `id_ingredient`, `qte`) VALUES
+-- Listage des données de la table gaulois_maximef.composer : ~24 rows (environ)
+REPLACE INTO `composer` (`id_potion`, `id_ingredient`, `qte`) VALUES
 	(1, 4, 2),
 	(1, 5, 20),
 	(1, 23, 4),
@@ -211,7 +211,7 @@ INSERT IGNORE INTO `composer` (`id_potion`, `id_ingredient`, `qte`) VALUES
 	(13, 26, 2),
 	(14, 16, 3);
 
--- Listage de la structure de table gaulois. ingredient
+-- Listage de la structure de table gaulois_maximef. ingredient
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id_ingredient` int NOT NULL AUTO_INCREMENT,
   `nom_ingredient` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
@@ -219,8 +219,8 @@ CREATE TABLE IF NOT EXISTS `ingredient` (
   PRIMARY KEY (`id_ingredient`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.ingredient : ~26 rows (environ)
-INSERT IGNORE INTO `ingredient` (`id_ingredient`, `nom_ingredient`, `cout_ingredient`) VALUES
+-- Listage des données de la table gaulois_maximef.ingredient : ~26 rows (environ)
+REPLACE INTO `ingredient` (`id_ingredient`, `nom_ingredient`, `cout_ingredient`) VALUES
 	(1, 'Petit pois', 0.5),
 	(2, 'Haricot vert', 1),
 	(3, 'Queue de crevette', 7),
@@ -248,15 +248,15 @@ INSERT IGNORE INTO `ingredient` (`id_ingredient`, `nom_ingredient`, `cout_ingred
 	(25, 'Edelweiss', 80),
 	(26, 'Poisson pas frais', 1);
 
--- Listage de la structure de table gaulois. lieu
+-- Listage de la structure de table gaulois_maximef. lieu
 CREATE TABLE IF NOT EXISTS `lieu` (
   `id_lieu` int NOT NULL AUTO_INCREMENT,
   `nom_lieu` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   PRIMARY KEY (`id_lieu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.lieu : ~18 rows (environ)
-INSERT IGNORE INTO `lieu` (`id_lieu`, `nom_lieu`) VALUES
+-- Listage des données de la table gaulois_maximef.lieu : ~18 rows (environ)
+REPLACE INTO `lieu` (`id_lieu`, `nom_lieu`) VALUES
 	(1, 'Village gaulois'),
 	(2, 'Babaorum'),
 	(3, 'Laudanum'),
@@ -276,7 +276,7 @@ INSERT IGNORE INTO `lieu` (`id_lieu`, `nom_lieu`) VALUES
 	(17, 'Gergovie'),
 	(18, 'Village belge');
 
--- Listage de la structure de table gaulois. personnage
+-- Listage de la structure de table gaulois_maximef. personnage
 CREATE TABLE IF NOT EXISTS `personnage` (
   `id_personnage` int NOT NULL AUTO_INCREMENT,
   `nom_personnage` varchar(80) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
@@ -291,8 +291,8 @@ CREATE TABLE IF NOT EXISTS `personnage` (
   CONSTRAINT `FK_VILLAGEOIS_SPEC` FOREIGN KEY (`id_specialite`) REFERENCES `specialite` (`id_specialite`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.personnage : ~43 rows (environ)
-INSERT IGNORE INTO `personnage` (`id_personnage`, `nom_personnage`, `adresse_personnage`, `image_personnage`, `id_lieu`, `id_specialite`) VALUES
+-- Listage des données de la table gaulois_maximef.personnage : ~43 rows (environ)
+REPLACE INTO `personnage` (`id_personnage`, `nom_personnage`, `adresse_personnage`, `image_personnage`, `id_lieu`, `id_specialite`) VALUES
 	(4, 'Astérix', 'Au fond à droite', 'indisponible.jpg', 1, 1),
 	(5, 'Obélix', 'Carrière de menhir', 'indisponible.jpg', 1, 5),
 	(6, 'Assurancetourix', 'Hutte dans l\'arbre', 'indisponible.jpg', 1, 2),
@@ -337,15 +337,15 @@ INSERT IGNORE INTO `personnage` (`id_personnage`, `nom_personnage`, `adresse_per
 	(45, 'Champdeblix', 'Ferme Hantassion', 'indisponible.jpg', 6, 12),
 	(46, 'Champdeblix', 'Ferme Hantassion', 'indisponible.jpg', 6, 12);
 
--- Listage de la structure de table gaulois. potion
+-- Listage de la structure de table gaulois_maximef. potion
 CREATE TABLE IF NOT EXISTS `potion` (
   `id_potion` int NOT NULL AUTO_INCREMENT,
   `nom_potion` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   PRIMARY KEY (`id_potion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.potion : ~15 rows (environ)
-INSERT IGNORE INTO `potion` (`id_potion`, `nom_potion`) VALUES
+-- Listage des données de la table gaulois_maximef.potion : ~15 rows (environ)
+REPLACE INTO `potion` (`id_potion`, `nom_potion`) VALUES
 	(1, 'Magique'),
 	(2, 'Rajeunissement II'),
 	(3, 'Santé'),
@@ -362,7 +362,7 @@ INSERT IGNORE INTO `potion` (`id_potion`, `nom_potion`) VALUES
 	(14, 'Gigantisme'),
 	(15, 'Miniaturisation');
 
--- Listage de la structure de table gaulois. prendre_casque
+-- Listage de la structure de table gaulois_maximef. prendre_casque
 CREATE TABLE IF NOT EXISTS `prendre_casque` (
   `id_casque` int NOT NULL,
   `id_personnage` int NOT NULL,
@@ -376,8 +376,8 @@ CREATE TABLE IF NOT EXISTS `prendre_casque` (
   CONSTRAINT `FK_PRCSQ_PERSO` FOREIGN KEY (`id_personnage`) REFERENCES `personnage` (`id_personnage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.prendre_casque : ~18 rows (environ)
-INSERT IGNORE INTO `prendre_casque` (`id_casque`, `id_personnage`, `id_bataille`, `qte`) VALUES
+-- Listage des données de la table gaulois_maximef.prendre_casque : ~18 rows (environ)
+REPLACE INTO `prendre_casque` (`id_casque`, `id_personnage`, `id_bataille`, `qte`) VALUES
 	(2, 8, 1, 8),
 	(2, 15, 15, 4),
 	(3, 4, 11, 1),
@@ -397,15 +397,15 @@ INSERT IGNORE INTO `prendre_casque` (`id_casque`, `id_personnage`, `id_bataille`
 	(18, 5, 1, 60),
 	(18, 8, 1, 12);
 
--- Listage de la structure de table gaulois. specialite
+-- Listage de la structure de table gaulois_maximef. specialite
 CREATE TABLE IF NOT EXISTS `specialite` (
   `id_specialite` int NOT NULL AUTO_INCREMENT,
   `nom_specialite` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   PRIMARY KEY (`id_specialite`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.specialite : ~17 rows (environ)
-INSERT IGNORE INTO `specialite` (`id_specialite`, `nom_specialite`) VALUES
+-- Listage des données de la table gaulois_maximef.specialite : ~17 rows (environ)
+REPLACE INTO `specialite` (`id_specialite`, `nom_specialite`) VALUES
 	(1, 'Guerrier'),
 	(2, 'Barde'),
 	(3, 'Druide'),
@@ -424,15 +424,15 @@ INSERT IGNORE INTO `specialite` (`id_specialite`, `nom_specialite`) VALUES
 	(16, 'Femme de chef'),
 	(17, 'Autre');
 
--- Listage de la structure de table gaulois. type_casque
+-- Listage de la structure de table gaulois_maximef. type_casque
 CREATE TABLE IF NOT EXISTS `type_casque` (
   `id_type_casque` int NOT NULL AUTO_INCREMENT,
   `nom_type_casque` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   PRIMARY KEY (`id_type_casque`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Listage des données de la table gaulois.type_casque : ~4 rows (environ)
-INSERT IGNORE INTO `type_casque` (`id_type_casque`, `nom_type_casque`) VALUES
+-- Listage des données de la table gaulois_maximef.type_casque : ~0 rows (environ)
+REPLACE INTO `type_casque` (`id_type_casque`, `nom_type_casque`) VALUES
 	(1, 'Romain'),
 	(2, 'Grec'),
 	(3, 'Normand'),
