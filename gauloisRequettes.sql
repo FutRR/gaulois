@@ -48,15 +48,21 @@ WHERE composer.id_potion = 3
 
 -- 8. Nom du ou des personnages qui ont pris le plus de casques dans la bataille 'Bataille du village
 -- gaulois'.
-SELECT nom_personnage
-FROM personnage
-INNER JOIN prendre_casque ON personnage.id_personnage = prendre_casque.id_personnage
-WHERE id_bataille = ALL(
-    SELECT id_personnage
-    FROM prendre_casque
-    HAVING MAX(qte)
+SELECT nom_personnage, SUM(qte) AS nbCasque
+FROM personnage, bataille, prendre_casque
+WHERE personnage.id_personnage = prendre_casque.id_personnage
+AND bataille.id_bataille = prendre_casque.id_bataille
+AND nom_bataille = 'Bataille du village gaulois'
+
+GROUP BY personnage.id_personnage
+
+HAVING nbCasque >= ALL(
+    SELECT SUM(qte)
+    FROM prendre_casque, bataille
+    WHERE bataille.id_bataille = prendre_casque.id_bataille
+    AND nom_bataille = 'Bataille du village gaulois'
+    GROUP BY id_personnage
 )
-GROUP BY nom_personnage
 
 -- 9. Nom des personnages et leur quantité de potion bue (en les classant du plus grand buveur
 -- au plus petit).
@@ -67,17 +73,26 @@ ORDER BY dose_boire DESC
 
 -- 10. Nom de la bataille où le nombre de casques pris a été le plus important.
 SELECT nom_bataille, SUM(qte) AS nbCasque
-FROM prendre_casque
-INNER JOIN bataille ON prendre_casque.id_bataille = bataille.id_bataille
-GROUP BY prendre_casque.id_bataille
-HAVING MAX(qte) LIMIT 1
+FROM bataille, prendre_casque
+WHERE bataille.id_bataille = prendre_casque.id_bataille
+
+GROUP BY bataille.id_bataille
+
+HAVING nbCasque >= ALL(
+    SELECT SUM(qte)
+    FROM prendre_casque, bataille
+    WHERE bataille.id_bataille = prendre_casque.id_bataille
+    AND nom_bataille = 'Bataille du village gaulois'
+    GROUP BY bataille.id_bataille
+)
 
 -- 11. Combien existe-t-il de casques de chaque type et quel est leur coût total ? (classés par
 -- nombre décroissant)
-SELECT COUNT(id_casque) AS nbCasque, SUM(cout_casque*id_casque) AS coutCasque, id_type_casque
+SELECT COUNT(id_casque) AS nbCasque, SUM(cout_casque) AS coutCasque, nom_type_casque
 FROM casque
-GROUP BY id_type_casque
-ORDER BY SUM(cout_casque*id_casque) DESC
+INNER JOIN type_casque ON casque.id_type_casque = type_casque.id_type_casque
+GROUP BY casque.id_type_casque
+ORDER BY SUM(cout_casque) DESC
 
 -- 12. Nom des potions dont un des ingrédients est le poisson frais.
 SELECT nom_potion
@@ -87,13 +102,23 @@ INNER JOIN ingredient ON composer.id_ingredient = ingredient.id_ingredient
 WHERE composer.id_ingredient = 24
 
 -- 13. Nom du / des lieu(x) possédant le plus d'habitants, en dehors du village gaulois.
-SELECT nom_lieu, COUNT(id_personnage)
-FROM lieu
-INNER JOIN personnage ON lieu.id_lieu = personnage.id_lieu
-WHERE lieu.id_lieu != 1
+SELECT nom_lieu, COUNT(id_personnage) AS nbPersonnages
+FROM personnage, lieu
+WHERE lieu.id_lieu = personnage.id_lieu
+AND nom_lieu <> 'Village gaulois'
+
 GROUP BY lieu.id_lieu
-HAVING MAX(id_personnage)
-ORDER BY COUNT(id_personnage) DESC
+
+HAVING nbPersonnages >= ALL(
+    SELECT COUNT(id_personnage)
+    FROM personnage, lieu
+    WHERE lieu.id_lieu = personnage.id_lieu
+    AND nom_lieu <> 'Village gaulois'
+    GROUP BY lieu.id_lieu
+)
+
+
+
 
 -- 14. Nom des personnages qui n'ont jamais bu aucune potion.
 SELECT nom_personnage
@@ -103,9 +128,8 @@ WHERE id_personnage NOT IN (SELECT id_personnage FROM boire)
 -- 15. Nom du / des personnages qui n'ont pas le droit de boire de la potion 'Magique'
 
 SELECT nom_personnage
-FROM autoriser_boire
-INNER JOIN personnage ON autoriser_boire.id_personnage = personnage.id_personnage
-WHERE id_potion != 1
+FROM personnage
+WHERE id_personnage NOT IN (SELECT id_personnage FROM autoriser_boire WHERE id_potion = 1)
 
 -- En écrivant toujours des requêtes SQL, modifiez la base de données comme suit :
 
